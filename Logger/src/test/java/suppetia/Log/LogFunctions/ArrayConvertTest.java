@@ -1,10 +1,10 @@
-package suppetia.Log;
+package suppetia.Log.LogFunctions;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import suppetia.Log.Functions.ArrayConvert;
+import suppetia.Log.LogFunctions.ArrayConvert;
 
 public class ArrayConvertTest {
 

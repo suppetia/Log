@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollBar;
 
 import suppetia.Log.*;
-import suppetia.Log.Functions.LogAnalysisFunctions;
+import suppetia.Log.LogFunctions.LogAnalysisFunctions;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;

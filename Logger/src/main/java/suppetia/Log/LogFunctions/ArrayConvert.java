@@ -4,7 +4,7 @@
  * Christopher Mertens
  */
 
-package suppetia.Log.Functions;
+package suppetia.Log.LogFunctions;
 
 public class ArrayConvert {
 

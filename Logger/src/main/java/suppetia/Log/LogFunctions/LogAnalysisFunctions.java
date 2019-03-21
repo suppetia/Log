@@ -1,4 +1,4 @@
-package suppetia.Log.Functions;
+package suppetia.Log.LogFunctions;
 
 import suppetia.Log.ILog;
 

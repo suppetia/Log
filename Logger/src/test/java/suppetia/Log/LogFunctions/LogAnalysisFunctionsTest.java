@@ -1,4 +1,4 @@
-package suppetia.Log;
+package suppetia.Log.LogFunctions;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,7 @@ import org.junit.Test;
 import suppetia.Log.ILog;
 import suppetia.Log.Log;
 import suppetia.Log.LogTypeException;
-import suppetia.Log.Functions.LogAnalysisFunctions;
+import suppetia.Log.LogFunctions.LogAnalysisFunctions;
 
 public class LogAnalysisFunctionsTest {
 
