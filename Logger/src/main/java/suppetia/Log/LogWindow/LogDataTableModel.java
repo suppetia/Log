@@ -3,7 +3,7 @@ package suppetia.Log.LogWindow;
 import javax.swing.table.DefaultTableModel;
 import suppetia.Log.LogEntryNumber;
 
-public class LogDataTableModel extends DefaultTableModel {
+class LogDataTableModel extends DefaultTableModel {
 
     public LogDataTableModel(Object[] columnNames) {
 	super(columnNames, 0);

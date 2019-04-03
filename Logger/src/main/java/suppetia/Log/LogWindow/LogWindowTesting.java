@@ -13,7 +13,7 @@ public class LogWindowTesting {
 	
 	//test
 	try {
-	    for (int i = 0; i < 100000; i++) {
+	    for (int i = 0; i < 10; i++) {
 		window.log(new Number[] {i, i * 5, i / 3.0});
 	    }
 	} catch (LogTypeException e) {

@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollBar;
 
 import suppetia.Log.*;
-import suppetia.Log.LogFunctions.LogAnalysisFunctions;
+import suppetia.Log.LogFunctions.*;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -14,31 +14,37 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class LogWindow extends JFrame{
-	private JTable table;
+	private JTable tableData;
 	private LogDataTableModel dataModel;
+	private LogAnalysisTableModel analysisModel;
 	private ILog log;
 	private JScrollPane scrollPane;
+	private JScrollPane scrollPane2;
+	private JTable tableAnalysis;
+	private JPanel panel;
 	
 	
     public LogWindow(String[] coloumnNames, Class<Number>[] coloumnClasses) {
 	
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
-	
-	getContentPane().setLayout(new MigLayout("", "[grow]", "[grow][]"));
+	getContentPane().setLayout(new MigLayout("", "[grow][]", "[grow][grow][grow][][]"));
 	
 	scrollPane = new JScrollPane();
 	getContentPane().add(scrollPane, "cell 0 0,grow");
 	
 	dataModel = new LogDataTableModel(coloumnNames);
 	
-	table = new JTable(dataModel);
-	table.setCellSelectionEnabled(true);
-	table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-	scrollPane.setViewportView(table);
+	tableData = new JTable(dataModel);
+	tableData.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+	scrollPane.setViewportView(tableData);
 	
+		
+	analysisModel = new LogAnalysisTableModel(dataModel);
 	
 	JButton btnSaveLog = new JButton("save log");
 	btnSaveLog.addActionListener(new ActionListener() {
@@ -51,7 +57,13 @@ public class LogWindow extends JFrame{
 		    }
 		}
 	});
-	getContentPane().add(btnSaveLog, "cell 0 1");
+	
+	scrollPane2 = new JScrollPane();
+	getContentPane().add(scrollPane2, "cell 0 2");
+	
+	tableAnalysis = new JTable(analysisModel);
+	scrollPane2.setViewportView(tableAnalysis);
+	getContentPane().add(btnSaveLog, "cell 0 4");
 	
 	
 	// init
@@ -106,6 +118,8 @@ public class LogWindow extends JFrame{
 	vertical.setValue(vertical.getMaximum());
 
     }
+
+    
     
     
 }

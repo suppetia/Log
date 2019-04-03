@@ -6,7 +6,7 @@
 
 package suppetia.Log.LogFunctions;
 
-public class ArrayConvert {
+public final class ArrayConvert {
 
     public static double[] toPrimitive(Double[] array) {
 	double[] convertedArray = new double[array.length];
