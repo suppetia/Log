@@ -1,6 +1,6 @@
 # Logger
 
-A possibility to store some logdata; provides some analysis tools.
+A possibility to store some log data; provides some analysis tools.
 
 --- work in progress ---
 
@@ -20,7 +20,7 @@ A possibility to store some logdata; provides some analysis tools.
 ### public class LogEntryNumber
 
  - single log entry
- - stores data, logtime (and optional a description)
+ - stores data, log time (and optional a description)
 
 
 
@@ -59,7 +59,12 @@ A possibility to store some logdata; provides some analysis tools.
 ### (package-private) class LogDataTableModel
  -> extends DefaultTableModel
  
- - columns of the type of the log 
+ - columns of the type of the log
+ 
+### (package-private) class LogDataTableModel
+ -> extends DefaultTableModel
+ 
+ - table model for results of the analysis of log entries 
  
 ### public class LogWindowTesting
 

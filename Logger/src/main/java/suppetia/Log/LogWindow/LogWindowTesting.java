@@ -1,6 +1,7 @@
 package suppetia.Log.LogWindow;
 
 import suppetia.Log.LogTypeException;
+import java.util.Random;
 
 public class LogWindowTesting {
 
@@ -14,7 +15,8 @@ public class LogWindowTesting {
 	//test
 	try {
 	    for (int i = 0; i < 10; i++) {
-		window.log(new Number[] {i, i * 5, i / 3.0});
+		Random r = new Random();
+		window.log(new Number[] {r.nextInt(), r.nextInt(), r.nextDouble()});
 	    }
 	} catch (LogTypeException e) {
 	    // TODO Auto-generated catch block
