@@ -18,9 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JTextField;
+import java.awt.event.WindowAdapter;
 
 public class LogWindow extends JFrame{
 	private JTable tableData;
@@ -34,9 +37,28 @@ public class LogWindow extends JFrame{
 	private JButton btnAnalyseAll;
 	
 	
-    public LogWindow(String[] coloumnNames, Class<Number>[] coloumnClasses) {
+    /**
+     * @wbp.parser.constructor
+     */
+    public LogWindow(String[] coloumnNames, Class<Number>[] coloumnClasses, boolean saveOnClose) {
 	
-	setDefaultCloseOperation(EXIT_ON_CLOSE);
+	if (saveOnClose) {
+	    addWindowListener(new WindowAdapter() {
+    		@Override
+    		public void windowClosed(java.awt.event.WindowEvent arg0) {
+    		    try {
+			log.saveLog();
+		    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		    }
+    		}
+    	});
+	}
+	
+	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	setVisible(true);
+	setBounds(0, 0, 200, 600);
 	
 	getContentPane().setLayout(new MigLayout("", "[grow]", "[grow][86.5:86.5:86.5][]"));
 
@@ -91,8 +113,31 @@ public class LogWindow extends JFrame{
 	getContentPane().add(btnAnalyseAll, "cell 0 2,alignx right");
 	
 	
-	// init
+	// initialize
 	init(coloumnClasses);
+    }
+    
+    // constructor which doesn't save the Log on WindowClosing automatically
+    public LogWindow(String[] coloumnNames, Class<Number>[] coloumnClasses) {
+	this(coloumnNames, coloumnClasses, false);
+    }
+    
+    // contructor which displays a ILog in the LogWindow
+    public LogWindow(String[] coloumnNames, ILog log, boolean saveOnClose) {
+	this(coloumnNames, log.getDataClasses(), saveOnClose);
+	this.log = log;
+	// read in the log data
+	for (LogEntryNumber entry : log.getLogs()) {
+	    dataModel.addLogEntry(entry);
+	}
+	// scrolls to the bottom
+	JScrollBar vertical = scrollPane.getVerticalScrollBar();
+	vertical.setValue(vertical.getMaximum());
+    }
+    
+    // log data with these functions
+    public LogWindow(String[] coloumnNames, ILog log) {
+	this(coloumnNames, log, false);
     }
     
     public void init(Class<Number>[] coloumnClasses) {
@@ -120,6 +165,7 @@ public class LogWindow extends JFrame{
 	refreshTable();
     }
     
+    // analysis functions
     private double getAverage(int index, int[] rows) {
 	return LogAnalysisFunctions.getAverage(log, index, rows);
     }
@@ -143,6 +189,7 @@ public class LogWindow extends JFrame{
 	vertical.setValue(vertical.getMaximum());
     }
     
+    // executes analysis functions for the selected log entries
     private void analyseSelectedRows(int[] rows) {
 	for (int i = 0; i < log.getDataAmount(); i++) {
 	    analysisModel.setValueAt(getSum(i, rows), 0, i + 1);
@@ -151,6 +198,7 @@ public class LogWindow extends JFrame{
 	    analysisModel.setValueAt(getMax(i, rows), 3, i + 1);
 	}
     }
+    // executes analysis functions for all the log entries
     private void analyseAllRows() {
 	int[] rows = new int[log.numberOfLogs()];
 	for (int i = 0; i < rows.length; i++) {
