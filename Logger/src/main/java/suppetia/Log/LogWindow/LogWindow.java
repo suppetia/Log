@@ -33,14 +33,13 @@ public class LogWindow extends JFrame{
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane2;
 	private JTable tableAnalysis;
-	private JPanel panel;
 	private JButton btnAnalyseAll;
 	
-	
+
     /**
      * @wbp.parser.constructor
      */
-    public LogWindow(String[] coloumnNames, Class<Number>[] coloumnClasses, boolean saveOnClose) {
+    public LogWindow(String[] columnNames, Class<Number>[] columnClasses, boolean saveOnClose) {
 	
 	if (saveOnClose) {
 	    addWindowListener(new WindowAdapter() {
@@ -65,7 +64,15 @@ public class LogWindow extends JFrame{
 	scrollPane = new JScrollPane();
 	getContentPane().add(scrollPane, "cell 0 0,grow");
 	
-	dataModel = new LogDataTableModel(coloumnNames);
+	// add the column names of "log time" and "description"
+	String[] columnNamesFinal = new String[columnNames.length + 2];
+	for (int i = 0; i < columnNames.length; i++) {
+	    columnNamesFinal[i] = columnNames[i];
+	    
+	}
+	columnNamesFinal[columnNamesFinal.length - 2] = "description";
+	columnNamesFinal[columnNamesFinal.length - 1] = "log time";
+	dataModel = new LogDataTableModel(columnNamesFinal);
 	
 	tableData = new JTable(dataModel);
 	tableData.addMouseListener(new MouseAdapter() {
@@ -75,7 +82,6 @@ public class LogWindow extends JFrame{
 			analyseSelectedRows(tableData.getSelectedRows());
 		    else 
 			analyseAllRows();
-		
 		}
 	});
 	tableData.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -114,36 +120,32 @@ public class LogWindow extends JFrame{
 	
 	
 	// initialize
-	init(coloumnClasses);
+	log = new Log(columnClasses);
     }
     
     // constructor which doesn't save the Log on WindowClosing automatically
-    public LogWindow(String[] coloumnNames, Class<Number>[] coloumnClasses) {
-	this(coloumnNames, coloumnClasses, false);
+    public LogWindow(String[] columnNames, Class<Number>[] columnClasses) {
+	this(columnNames, columnClasses, false);
     }
     
-    // contructor which displays a ILog in the LogWindow
-    public LogWindow(String[] coloumnNames, ILog log, boolean saveOnClose) {
-	this(coloumnNames, log.getDataClasses(), saveOnClose);
+    // constructor which displays a ILog in the LogWindow
+    public LogWindow(final String[] columnNames, final ILog log, boolean saveOnClose) {
+	this(columnNames, log.getDataClasses(), saveOnClose);
 	this.log = log;
 	// read in the log data
-	for (LogEntryNumber entry : log.getLogs()) {
+	for (LogEntryNumber entry : this.log.getLogs()) {
 	    dataModel.addLogEntry(entry);
 	}
 	// scrolls to the bottom
 	JScrollBar vertical = scrollPane.getVerticalScrollBar();
 	vertical.setValue(vertical.getMaximum());
     }
+
+    public LogWindow(String[] columnNames, ILog log) {
+	this(columnNames, log, false);
+    }
     
     // log data with these functions
-    public LogWindow(String[] coloumnNames, ILog log) {
-	this(coloumnNames, log, false);
-    }
-    
-    public void init(Class<Number>[] coloumnClasses) {
-	log = new Log(coloumnClasses);
-    }
-    
     public void log(LogEntryNumber logEntry) throws LogTypeException {
 	log.log(logEntry);
 	refreshTable();
@@ -200,16 +202,8 @@ public class LogWindow extends JFrame{
     }
     // executes analysis functions for all the log entries
     private void analyseAllRows() {
-	int[] rows = new int[log.numberOfLogs()];
-	for (int i = 0; i < rows.length; i++) {
-	    rows[i] = i;
-	}
-	for (int i = 0; i < log.getDataAmount(); i++) {
-	    analysisModel.setValueAt(getSum(i, rows), 0, i + 1);
-	    analysisModel.setValueAt(getAverage(i, rows), 1, i + 1);
-	    analysisModel.setValueAt(getMin(i, rows), 2, i + 1);
-	    analysisModel.setValueAt(getMax(i, rows), 3, i + 1);
-	}
+	tableData.selectAll();
+	analyseSelectedRows(tableData.getSelectedRows());
     }
 
     

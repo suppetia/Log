@@ -19,21 +19,24 @@ public class LogEntryNumber {
 
     /* Constructors */
     
-    public LogEntryNumber(Number data) {
+    public LogEntryNumber(final Number data) {
 	this.data = new Number[] { data };
 	this.logtime = LocalDateTime.now();
 	this.description = null;
     }
-    public LogEntryNumber(Number data, String description){
+    public LogEntryNumber(final Number data, String description){
 	this(data);
 	this.description = description;
     }
-    public LogEntryNumber(Number[] data) {
-	this.data = data;
+    public LogEntryNumber(final Number[] data) {
+	this.data = new Number[data.length];
+	for (int i = 0; i < data.length; i++) {
+	    this.data[i] = data[i];
+	}
 	this.logtime = LocalDateTime.now();
 	this.description = null;
     }
-    public LogEntryNumber(Number[] data, String description) {
+    public LogEntryNumber(final Number[] data, String description) {
 	this(data);
 	this.description = description;
     }
@@ -113,25 +116,22 @@ public class LogEntryNumber {
     /* toString() method */
     /**
      * overrides the toString() method
-     * separates the the attributes with a ','
+     * separates the the attributes with a DATA_SEPERATOR
      */
     @Override
     public String toString() {
 	String dataString = "";
 	for (int i = 0; i < getDataAmount(); i++) {
-	    if (getDataAt(i).getClass() == Double.class 
+	    if (getDataClass(i) == Double.class 
 		    || getDataAt(i).getClass() == Float.class) {
-		dataString = dataString.concat(DECIMAL_FORMAT.format((getDataAt(i))) 
-			    + LogEntryNumber.DATA_SEPARATOR);
+		dataString = dataString.concat(DECIMAL_FORMAT.format((getDataAt(i))) + DATA_SEPARATOR);
 	    } else {
-		dataString = dataString.concat(String.valueOf(getDataAt(i)) 
-			    + LogEntryNumber.DATA_SEPARATOR);
+		dataString = dataString.concat(String.valueOf(getDataAt(i)) + DATA_SEPARATOR);
 	    }
 	}
 	dataString = dataString.concat(logtime.toString());
 	if (logtime != null) {
-	    dataString = dataString.concat(LogEntryNumber.DATA_SEPARATOR 
-		    + description);
+	    dataString = dataString.concat(DATA_SEPARATOR + description);
 	}
 	return dataString;
     }
