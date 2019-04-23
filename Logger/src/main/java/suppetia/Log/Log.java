@@ -80,9 +80,7 @@ public class Log implements ILog {
      */
     @Override
     public void log(LogEntryNumber logEntry) throws LogTypeException {
-    	if (Arrays.equals(logEntry.getDataClasses(), getDataClasses()) 
-    		&& (getDescription().equals(logEntry.getDescription())
-    			|| logEntry.getDescription() == null))
+    	if (Arrays.equals(logEntry.getDataClasses(), getDataClasses()))
     	    logEntries.add(logEntry);
     	else throw new LogTypeException();
     }
