@@ -15,6 +15,15 @@ A possibility to store some log data; provides some analysis tools.
 ### public class Log
 
  -> implements ILog
+ 
+ ```java
+ // Log(Class<Number>[] dataClasses)
+ ILog log = new Log(new Class[]{Double.class, Integer.class, Float.class});
+ 
+ // use log.log(...) to add log entries from type LogEntryNumber
+ log.log(new Number[]{12.34, 42, 13.5f}); // throws LogDataException if the data classes mismatch
+ log.log(new Number[]{12.34, 42, 13.5f}, "random stuff");
+ ```
 
 
 ### public class LogEntryNumber
@@ -54,7 +63,23 @@ A possibility to store some log data; provides some analysis tools.
 ### public class LogWindow
  -> extends JFrame
 
- - uses JTable to store a log (from type ILog)
+ - use to display ILog
+ 
+ possible use:
+ ```java
+ // LogWindow(String[] columnNames, ILog log, boolean saveOnClose)
+ LogWindow lowWindow = new LogWindow(new String[]{"temperature", "humidity", "brightness"},
+ 						log, true);
+ 						
+ // LogWindow(String[] columnNames, Class<Number>[] dataClasses, boolean saveOnClose)
+ LogWindow logWindow2 = new LogWindow(new String[]{"temperature", "humidity", "brightness"},
+ 						new Class[]{Double.class, Double.class, Double.class}, true);
+ 						
+ // use lowWindow.log(...) to add new log entries
+ logWindow2.log(new Number[]{22.3, 47.98, 0.1324}); // throws LogDataException if the data classes mismatch
+ ```
+ 
+ mark rows to analyze them
 
 ### (package-private) class LogDataTableModel
  -> extends DefaultTableModel
