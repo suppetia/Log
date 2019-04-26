@@ -8,9 +8,7 @@ public class LogWindowTesting {
     public static void main(String[] args) {
 	
 	Class<Number>[] dataClasses = new Class[] { Integer.class, Integer.class, Double.class};
-	LogWindow window = new LogWindow(new String[] {"1" , "2" , "3", "Description", "Logtime"}, dataClasses);
-	window.setVisible(true);
-	window.setBounds(0, 0, 200, 500);
+	LogWindow window = new LogWindow(new String[] {"1" , "2" , "3"}, dataClasses, true);
 	
 	//test
 	try {
@@ -18,6 +16,7 @@ public class LogWindowTesting {
 		Random r = new Random();
 		window.log(new Number[] {r.nextInt(), r.nextInt(), r.nextDouble()});
 	    }
+	    window.analyseAllRows();
 	} catch (LogTypeException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
