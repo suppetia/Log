@@ -67,8 +67,8 @@ LogWindow logWindow2 = new LogWindow(new String[]{"temperature", "humidity", "br
 // use lowWindow.log(...) to add new log entries
 logWindow2.log(new Number[]{22.3, 47.98, 0.1324}); // throws LogDataException if the data classes mismatch
 ```
-
-    mark rows to analyze them
+    - mark rows to analyze their logging data
+    
 ### (package-private) class LogDataTableModel
 -> extends DefaultTableModel
 
