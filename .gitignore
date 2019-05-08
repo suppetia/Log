@@ -1,0 +1,7 @@
+.settings/
+.classpath
+.project
+miglayout15-swing.jar
+Logger/build/
+Logger/build
+Logger/*gradle*
