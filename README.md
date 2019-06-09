@@ -71,10 +71,9 @@ logWindow2.log(new Number[]{22.3, 47.98, 0.1324}); // throws LogDataException if
 ### (package-private) class LogDataTableModel
 -> extends DefaultTableModel
 
-    - columns of the type of the log
+	- display data in a table
 
-### (package-private) class LogDataTableModel
-
+### (package-private) class LogAnalysisTableModel
 -> extends DefaultTableModel
 
-    - table model for results of the analysis of log entries
+    - display analysis of marked log entries in the table
